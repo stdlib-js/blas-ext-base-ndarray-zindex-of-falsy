@@ -1,4 +1,4 @@
-/**
+/*
 * @license Apache-2.0
 *
 * Copyright (c) 2026 The Stdlib Authors.
@@ -16,20 +16,11 @@
 * limitations under the License.
 */
 
-'use strict';
+// TypeScript Version: 4.1
 
-// MODULES //
+/// <reference types="https://cdn.jsdelivr.net/gh/stdlib-js/types@esm/index.d.ts"/>
 
-var ndarraylike2scalar = require( '@stdlib/ndarray-base-ndarraylike2scalar' );
-var numelDimension = require( '@stdlib/ndarray-base-numel-dimension' );
-var getStride = require( '@stdlib/ndarray-base-stride' );
-var getOffset = require( '@stdlib/ndarray-base-offset' );
-var getData = require( '@stdlib/ndarray-base-data-buffer' );
-var clipIndex = require( '@stdlib/ndarray-base-clip-index' );
-var strided = require( '@stdlib/blas-ext-base-zindex-of-falsy' ).ndarray;
-
-
-// MAIN //
+import { complex128ndarray, typedndarray } from '@stdlib/types/ndarray';
 
 /**
 * Returns the index of the first falsy element in a one-dimensional double-precision complex floating-point ndarray.
@@ -41,8 +32,8 @@ var strided = require( '@stdlib/blas-ext-base-zindex-of-falsy' ).ndarray;
 *     -   a one-dimensional input ndarray.
 *     -   a zero-dimensional ndarray containing the index from which to begin searching.
 *
-* @param {ArrayLikeObject<Object>} arrays - array-like object containing ndarrays
-* @returns {integer} index
+* @param arrays - array-like object containing ndarrays
+* @returns index
 *
 * @example
 * var Complex128Vector = require( '@stdlib/ndarray-vector-complex128' );
@@ -57,35 +48,9 @@ var strided = require( '@stdlib/blas-ext-base-zindex-of-falsy' ).ndarray;
 * var idx = zindexOfFalsy( [ x, fromIndex ] );
 * // returns 1
 */
-function zindexOfFalsy( arrays ) {
-	var fromIndex;
-	var stride;
-	var offset;
-	var idx;
-	var N;
-	var x;
-
-	x = arrays[ 0 ];
-	fromIndex = ndarraylike2scalar( arrays[ 1 ] );
-
-	N = numelDimension( x, 0 );
-	fromIndex = clipIndex( fromIndex, N );
-	if ( fromIndex >= N ) {
-		return -1;
-	}
-	N -= fromIndex;
-
-	stride = getStride( x, 0 );
-	offset = getOffset( x ) + ( stride*fromIndex );
-
-	idx = strided( N, getData( x ), stride, offset );
-	if ( idx >= 0 ) {
-		idx += fromIndex;
-	}
-	return idx;
-}
+declare function zindexOfFalsy( arrays: [ complex128ndarray, typedndarray<number> ] ): number;
 
 
 // EXPORTS //
 
-module.exports = zindexOfFalsy;
+export = zindexOfFalsy;
